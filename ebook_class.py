@@ -11,5 +11,5 @@ class Ebook(MSDBConnection):
             record = result.fetchone()
             if record is None:
                 break
-            return record
+            print(f"Title: {record.title} - Author: {record.author} - Date: {record.date_published}")
         print('All Records Retrieved')
