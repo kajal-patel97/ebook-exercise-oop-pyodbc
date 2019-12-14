@@ -12,7 +12,7 @@ class Ebook(MSDBConnection):
             record = result.fetchone()
             if record is None:
                 break
-            print(f"Title: {record.title} - Author: {record.author} - Date: {record.date_published}")
+            print(f"ID:{record.ebook_id}- Title: {record.title} - Author: {record.author} - Date: {record.date_published}")
         print('All Records Retrieved')
 
     def search_ebook(self):
@@ -38,3 +38,13 @@ class Ebook(MSDBConnection):
         result = self._MSDBConnection__sql_query(query)
         self.docker_ebook_store.commit()
         return result
+
+    def add_postcode_to_book(self):
+        postcode = input('Whats the postcode you want to add?').upper()
+        id = input('What is the ebook id you would like to add this to..')
+        query = f"UPDATE ebooks SET postcode ='{postcode}' WHERE ebook_id = '{id}'"
+        result = self._MSDBConnection__sql_query(query)
+        self.docker_ebook_store.commit()
+        return result
+
+

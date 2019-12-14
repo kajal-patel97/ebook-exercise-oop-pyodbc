@@ -8,6 +8,7 @@ while True:
     print('Option 1 -- Get all Books')
     print('Option 2 -- Search for a book')
     print('Option 3 -- Add a Book')
+    print('Option 4 -- Add a Postcode')
 
     print('_________________________________________')
 
@@ -26,3 +27,7 @@ while True:
         print('We need some information to add a new book in!')
         table_ebooks.add_ebook()
         print('Book has been added!')
+
+    elif user_input == '4':
+        table_ebooks.add_postcode_to_book()
+        print('Postcode has been addded!')
