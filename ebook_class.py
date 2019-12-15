@@ -1,6 +1,6 @@
 import pyodbc
 from connect_sql import *
-
+import requests
 
 class Ebook(MSDBConnection):
 
@@ -47,4 +47,32 @@ class Ebook(MSDBConnection):
         self.docker_ebook_store.commit()
         return result
 
+    def geo_code_api_call(self):
+        get_id = input('What is the book ID you would like to get a postcode for?')
+        get_postcode = f"SELECT postcode FROM ebooks WHERE ebook_id = '{get_id}'"
+        result = self._MSDBConnection__sql_query(get_postcode)
+        while True:
+            record = result.fetchone()
+            if record is None:
+                break
+            postcode = record.postcode
 
+        #build a URL
+        path_url = 'http://api.postcodes.io/postcodes/'
+        arg = f'{postcode}'
+        post_code = requests.get(path_url + arg.strip())
+
+        #turn into a dictionary
+        post_code_dictionary = post_code.json()
+
+        #get the information
+        long = post_code_dictionary['result']['longitude']
+        lat = post_code_dictionary['result']['latitude']
+
+        #input into data base
+
+        query = f"UPDATE ebooks SET longitude = '{long}', latitude = '{lat}' WHERE ebook_id = {get_id}"
+        result2 = self._MSDBConnection__sql_query(query)
+        self.docker_ebook_store.commit()
+
+        return result2

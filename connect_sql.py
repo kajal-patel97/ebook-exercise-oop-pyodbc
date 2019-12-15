@@ -16,3 +16,5 @@ class MSDBConnection():
 
     def __sql_query(self,sql_query):
         return self.cursor.execute(sql_query)
+
+
