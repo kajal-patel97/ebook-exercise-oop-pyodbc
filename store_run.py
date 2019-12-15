@@ -10,6 +10,7 @@ while True:
     print('Option 3 -- Add a Book')
     print('Option 4 -- Add a Postcode')
     print('Option 5 -- Add Longitude and Latitude to a Book')
+    print("'exit to close the program'")
 
     print('_________________________________________')
 
@@ -37,4 +38,6 @@ while True:
         table_ebooks.geo_code_api_call()
         print('Longitude and Latitude added to chosen postcode')
 
-
+    else:
+        break
+    print('Thank you, you have exited!')
